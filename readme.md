@@ -1,9 +1,12 @@
 # Blendo Video Tools
 
 ## About
-This is a very basic gui for FFMPEG.
+This is a very basic gui for FFMPEG:
+
 ![](screenshot1.png)
+
 ![](screenshot2.png)
+
 ![](screenshot3.png)
 
 Functionality includes:
