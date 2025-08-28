@@ -19,8 +19,9 @@ This is written in C# and a .sln solution for Visual Studio 2015 is provided. Wi
 Pre-compiled binaries [available here](https://github.com/blendogames/blendovideotools/releases/tag/release).
 
 ## Notes
-- This tool can also be used on still images (PNG, JPG, etc), not just video.
+- This tool can also be used on still images (PNG, JPG, etc) and audio (WAV, OGG, etc), not just video.
 - The specific arguments used can be customized by editing the args_*.txt files.
+- It will output a file with a date timestamp appended to the filename.
 
 ## Installation
 Download [FFMPEG](https://www.ffmpeg.org/download.html#build-windows) and place ffmpeg.exe in the same folder as this program.
