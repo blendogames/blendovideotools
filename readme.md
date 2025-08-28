@@ -19,11 +19,11 @@ Pre-compiled binaries [available here](https://github.com/blendogames/blendovide
 - This tool can also be used on still images (PNG, JPG, etc), not just video.
 - The specific arguments used can be customized by editing the args_*.txt files.
 
-## License
-This source code is licensed under the MIT license.
-
 ## Installation
 Download [FFMPEG](https://www.ffmpeg.org/download.html#build-windows) and place ffmpeg.exe in the same folder as this program.
+
+## License
+This source code is licensed under the MIT license.
 
 ## Credits
 - by [Brendon Chung](https://blendogames.com)
