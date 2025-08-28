@@ -13,7 +13,7 @@ Functionality includes:
 
 This is written in C# and a .sln solution for Visual Studio 2015 is provided. Windows only.
 
-Pre-compiled binaries [available here](https://github.com/blendogames/blendosvideotools/releases/tag/release).
+Pre-compiled binaries [available here](https://github.com/blendogames/blendovideotools/releases/tag/release).
 
 ## Notes
 - This tool can also be used on still images (PNG, JPG, etc), not just video.
