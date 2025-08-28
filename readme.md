@@ -31,3 +31,6 @@ This source code is licensed under the MIT license.
 
 ## Credits
 - by [Brendon Chung](https://blendogames.com)
+
+## Libraries used
+- [FFMPEG](https://ffmpeg.org)
