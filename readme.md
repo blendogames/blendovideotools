@@ -1,18 +1,16 @@
 # Blendo Video Tools
 
 ## About
-This is a very basic gui for FFMPEG:
+This is a very basic gui for FFmpeg:
 
 ![](screenshot1.png)
-
-![](screenshot2.png)
-
-![](screenshot3.png)
 
 Functionality includes:
 - converting file types.
 - converting to a new framerate.
 - resizing to a new width/height.
+- trimming a video shorter.
+- joining multiple videos together.
 
 This is written in C# and a .sln solution for Visual Studio 2015 is provided. Windows only.
 

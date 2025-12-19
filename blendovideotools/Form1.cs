@@ -15,6 +15,8 @@ namespace blendovideotools
 {
     public partial class Form1 : Form
     {
+        const string MERGEFILE = "mergelist.txt";
+
         BackgroundWorker backgroundWorker;
         DateTime starttime;
 
@@ -23,7 +25,10 @@ namespace blendovideotools
         {
             fileConvert,
             framerateConvert,
-            resizeConvert
+            resizeConvert,
+            trim,            
+            merge,
+            custom,
         }
 
         public Form1()
@@ -139,6 +144,27 @@ namespace blendovideotools
                 backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
                 backgroundWorker.RunWorkerAsync(argument: files);
             }
+            else if (tabControl1.SelectedIndex == (int)TabIndex.trim)
+            {
+                backgroundWorker = new BackgroundWorker();
+                backgroundWorker.DoWork += OnTrimDoWork;
+                backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
+                backgroundWorker.RunWorkerAsync(argument: files);
+            }            
+            else if (tabControl1.SelectedIndex == (int)TabIndex.merge)
+            {
+                backgroundWorker = new BackgroundWorker();
+                backgroundWorker.DoWork += OnMergeDoWork;
+                backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
+                backgroundWorker.RunWorkerAsync(argument: files);
+            }
+            else if (tabControl1.SelectedIndex == (int)TabIndex.custom)
+            {
+                backgroundWorker = new BackgroundWorker();
+                backgroundWorker.DoWork += OnCustomDoWork;
+                backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
+                backgroundWorker.RunWorkerAsync(argument: files);
+            }
             else
             {
                 AddLog("ERROR: this shouldn't happen...");
@@ -195,7 +221,7 @@ namespace blendovideotools
 
             AddLog_Invoked(" ");
             AddLog_Invoked("Converting size: {0}", file.Name);
-            AddLog_Invoked(" ");
+            
 
             string newFileName = AppendFilenameEdit(file.Name);
             newFileName = Path.Combine(file.DirectoryName, newFileName);
@@ -204,6 +230,8 @@ namespace blendovideotools
             try
             {
                 arguments = string.Format(args, filename, _width, _height, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
             }
             catch (Exception e)
             {
@@ -277,7 +305,7 @@ namespace blendovideotools
 
             AddLog_Invoked(" ");
             AddLog_Invoked("Converting framerate: {0}", file.Name);
-            AddLog_Invoked(" ");
+            
 
             string newFileName = AppendFilenameEdit(file.Name);
             newFileName = Path.Combine(file.DirectoryName, newFileName);
@@ -286,6 +314,8 @@ namespace blendovideotools
             try
             {
                 arguments = string.Format(args, filename, framerateValue, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
             }
             catch (Exception e)
             {
@@ -331,8 +361,290 @@ namespace blendovideotools
 
         #endregion
 
+        #region MERGE
+        private void OnMergeDoWork(object sender, DoWorkEventArgs e)
+        {
+            string[] files = (string[])e.Argument;
+            if (files.Length < 2)
+            {
+                AddLog_Invoked("ERROR: you need to drag in at least 2 video files.");
+                return;
+            }
+
+            string args = GetArgs("args_merge.txt", "-y -f concat -safe 0 -i mergelist.txt -c copy \"{0}\"");
+            AddLog_Invoked("");
+            AddLog_Invoked("Using arguments: {0}", args);
+            
+            DoMergeConvert(files, args);
+        }
+
+        void DoMergeConvert(string[] files, string args)
+        {
+            AddLog_Invoked(" ");
+            AddLog_Invoked("Merging video files in this order:");
+            for (int i = 0; i < files.Length; i++)
+            {
+                AddLog_Invoked("    {0}", files[i]);
+            }
+            AddLog_Invoked(string.Empty);
+
+
+            //Write the text file.
+            AddLog_Invoked(string.Empty);
+            AddLog_Invoked("Writing mergelist.txt file...");
+            string mergelistStr = string.Empty;
+            for (int i = 0; i < files.Length; i++)
+            {
+                mergelistStr += string.Format("file '{0}'{1}", files[i], Environment.NewLine);
+            }
+
+            if (!WriteTextFile(mergelistStr, MERGEFILE))
+            {
+                return;
+            }
+            AddLog_Invoked("Wrote mergelist.txt file.");
+            AddLog_Invoked(string.Empty);
+
+
+
+            FileInfo file = new FileInfo(files[0]);
+            string newFileName = AppendFilenameEdit(file.Name);
+            newFileName = Path.Combine(file.DirectoryName, newFileName);
+
+            string arguments;
+            try
+            {
+                arguments = string.Format(args, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to parse arguments:");
+                AddLog_Invoked(args);
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = arguments;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            Process proc = new Process();
+
+            try
+            {
+                proc.StartInfo = startInfo;
+                proc.Start();
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    AddLog_Invoked("    " + line);
+                }
+            }
+            catch (Exception err)
+            {
+                AddLog_Invoked("------------------------------");
+                AddLog_Invoked(string.Format("ERROR: {0}", err));
+                AddLog_Invoked("------------------------------");
+            }
+
+            
+        }
+        #endregion
+
+        #region CUSTOM
+        private void OnCustomDoWork(object sender, DoWorkEventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(textBox_custom.Text))
+            {
+                AddLog_Invoked("ERROR: command field is empty.");
+                return;
+            }
+
+            string args = textBox_custom.Text;
+            AddLog_Invoked("");
+            AddLog_Invoked("Using arguments: {0}", args);
+
+            string[] files = (string[])e.Argument;
+            for (int i = 0; i < files.Length; i++)
+            {
+                DoCustom(files[i],  args);
+            }
+        }
+
+        void DoCustom(string filename, string args)
+        {
+            FileInfo file = new FileInfo(filename);
+
+            AddLog_Invoked(" ");
+            AddLog_Invoked("Custom command on: {0}", file.Name);
+
+            string newFileName = AppendFilenameEdit(file.Name);
+            newFileName = Path.Combine(file.DirectoryName, newFileName);
+
+            string arguments;
+            try
+            {
+                arguments = string.Format(args, filename, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to parse arguments:");
+                AddLog_Invoked(args);
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = arguments;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            Process proc = new Process();
+
+            try
+            {
+                proc.StartInfo = startInfo;
+                proc.Start();
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    AddLog_Invoked("    " + line);
+                }
+            }
+            catch (Exception err)
+            {
+                AddLog_Invoked("------------------------------");
+                AddLog_Invoked(string.Format("ERROR: {0}", err));
+                AddLog_Invoked("------------------------------");
+            }
+        }
+
+        #endregion
+
+        #region TRIM
+        private void OnTrimDoWork(object sender, DoWorkEventArgs e)
+        {
+
+            if (!string.IsNullOrWhiteSpace(textBox_trimstart.Text))
+            {
+                if (!VerifyTimeValue(textBox_trimstart.Text))
+                {
+                    AddLog_Invoked("ERROR: invalid start value. Expects time format: hh:mm:ss");
+                    return;
+                }
+            }
+
+            int heightValue = -1;
+            if (!string.IsNullOrWhiteSpace(textBox_trimend.Text))
+            {
+                if (!VerifyTimeValue(textBox_trimend.Text))
+                {
+                    AddLog_Invoked("ERROR: invalid end value. Expects time format: hh:mm:ss");
+                    return;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox_trimstart.Text) || string.IsNullOrWhiteSpace(textBox_trimend.Text))
+            {
+                AddLog_Invoked("ERROR: missing start or end value. Expects time format: hh:mm:ss");
+                return;
+            }
+
+            string args = GetArgs("args_trim.txt", "-ss {0} -to {1} -y -i \"{2}\" -c:v copy -c:a copy \"{3}\"");
+            AddLog_Invoked("");
+            AddLog_Invoked("Using arguments: {0}", args);
+
+            string[] files = (string[])e.Argument;
+            for (int i = 0; i < files.Length; i++)
+            {
+                DoTrim(files[i], textBox_trimstart.Text.Trim(), textBox_trimend.Text.Trim(), args);
+            }
+        }
+
+        void DoTrim(string filename, string startTime, string endTime, string args)
+        {
+            FileInfo file = new FileInfo(filename);
+
+            AddLog_Invoked(" ");
+            AddLog_Invoked("Trimming: {0}", file.Name);
+
+            string newFileName = AppendFilenameEdit(file.Name);
+            newFileName = Path.Combine(file.DirectoryName, newFileName);
+
+            string arguments;
+            try
+            {
+                arguments = string.Format(args,  startTime,   endTime, filename, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to parse arguments:");
+                AddLog_Invoked(args);
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = arguments;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            Process proc = new Process();
+
+            try
+            {
+                proc.StartInfo = startInfo;
+                proc.Start();
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    AddLog_Invoked("    " + line);
+                }
+            }
+            catch (Exception err)
+            {
+                AddLog_Invoked("------------------------------");
+                AddLog_Invoked(string.Format("ERROR: {0}", err));
+                AddLog_Invoked("------------------------------");
+            }
+        }
+
+        private bool VerifyTimeValue(string value)
+        {
+            //Just make sure there's at least one colon
+
+            int colonIndex = value.IndexOf(":");
+
+            if (colonIndex < 0)
+                return false;
+
+            return true;
+        }
+
+        #endregion
+
         private string GetArgs(string filename, string defaultArgs)
         {
+            if (!File.Exists(filename))
+                return defaultArgs;
+
             string args = GetFileContents(filename);
 
             if (string.IsNullOrWhiteSpace(args))
@@ -362,7 +674,6 @@ namespace blendovideotools
 
             AddLog_Invoked(" ");
             AddLog_Invoked("Converting filetype: {0}", file.Name);
-            AddLog_Invoked(" ");
 
             string newFileName = string.Format("{0}.{1}", filenameWithoutExtension, textBox_extension.Text);
             newFileName = AppendFilenameEdit(newFileName);
@@ -372,6 +683,8 @@ namespace blendovideotools
             try
             {
                 arguments = string.Format(args, filename, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
             }
             catch (Exception e)
             {
@@ -420,7 +733,26 @@ namespace blendovideotools
         {
             TimeSpan delta = DateTime.Now.Subtract(starttime);
             AddLog(" ");
-            AddLog("Done. (Total time: {0} seconds)", Math.Round(delta.TotalSeconds, 1).ToString());
+
+            string displayTime;
+            if (delta.TotalSeconds <= 60)
+            {
+                //less than a minute
+                displayTime = string.Format("{0} seconds", Math.Round(delta.TotalSeconds, 1).ToString());
+            }
+            else if (delta.Hours > 0)
+            {
+                //more than an hour
+                displayTime = string.Format("{0} hours {1} minutes", delta.Hours, delta.Minutes);
+            }
+            else
+            {
+                //less than an hour, more than a minute
+                displayTime = string.Format("{0} minutes {1} seconds", delta.Minutes, delta.Seconds);
+            }
+
+
+            AddLog("Done. (Total time: {0})", displayTime);
         }
 
         private string AppendFilenameEdit(string filename)
@@ -518,5 +850,26 @@ namespace blendovideotools
 
             return output;
         }
+
+        bool WriteTextFile(string stringArray, string fullPath)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(fullPath))
+                {
+                    writer.Write(stringArray);
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to write file. ({0})", e.Message);
+            }
+
+            return false;
+        }
+
+        // -- end --
     }
 }

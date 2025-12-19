@@ -1,0 +1,1 @@
+﻿-ss {0} -to {1} -y -i "{2}" -c:v copy -c:a copy "{3}"
