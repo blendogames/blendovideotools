@@ -28,6 +28,7 @@ namespace blendovideotools
             resizeConvert,
             trim,            
             merge,
+            crop,
             custom,
         }
 
@@ -155,6 +156,13 @@ namespace blendovideotools
             {
                 backgroundWorker = new BackgroundWorker();
                 backgroundWorker.DoWork += OnMergeDoWork;
+                backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
+                backgroundWorker.RunWorkerAsync(argument: files);
+            }
+            else if (tabControl1.SelectedIndex == (int)TabIndex.crop)
+            {
+                backgroundWorker = new BackgroundWorker();
+                backgroundWorker.DoWork += OnCropDoWork;
                 backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
                 backgroundWorker.RunWorkerAsync(argument: files);
             }
@@ -454,6 +462,99 @@ namespace blendovideotools
             }
 
             
+        }
+        #endregion
+
+
+        #region CROP
+        private void OnCropDoWork(object sender, DoWorkEventArgs e)
+        {
+            int errorCount = 0;
+            int cropWidth, cropHeight;
+            if (!int.TryParse(textBox_cropwidth.Text, out cropWidth))
+            {
+                AddLog_Invoked("ERROR: invalid crop width value.");
+                errorCount++;
+            }
+
+            if (!int.TryParse(textBox_cropheight.Text, out cropHeight))
+            {
+                AddLog_Invoked("ERROR: invalid crop height value.");
+                errorCount++;
+            }
+
+            if (errorCount > 0)
+                return;
+
+            string args = GetArgs("args_crop.txt", "-i \"{2}\" -vf \"crop={0}:{1}\" \"{3}\"");
+            AddLog_Invoked("");
+            AddLog_Invoked("Using arguments: {0}", args);
+
+            string[] files = (string[])e.Argument;
+            for (int i = 0; i < files.Length; i++)
+            {
+                DoCropConvert(files[i], args);
+            }
+        }
+
+        void DoCropConvert(string filename, string args)
+        {
+            int cropWidth, cropHeight;
+
+            cropWidth = int.Parse(textBox_cropwidth.Text);
+            cropHeight = int.Parse(textBox_cropheight.Text);
+
+            FileInfo file = new FileInfo(filename);
+
+            AddLog_Invoked(" ");
+            AddLog_Invoked("Cropping: {0}", file.Name);
+
+            string newFileName = AppendFilenameEdit(file.Name);
+            newFileName = Path.Combine(file.DirectoryName, newFileName);
+
+            string arguments;
+            try
+            {
+                arguments = string.Format(args, cropWidth, cropHeight, filename, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to parse arguments:");
+                AddLog_Invoked(args);
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = arguments;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            Process proc = new Process();
+
+            try
+            {
+                proc.StartInfo = startInfo;
+                proc.Start();
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    AddLog_Invoked("    " + line);
+                }
+            }
+            catch (Exception err)
+            {
+                AddLog_Invoked("------------------------------");
+                AddLog_Invoked(string.Format("ERROR: {0}", err));
+                AddLog_Invoked("------------------------------");
+            }
+
+
         }
         #endregion
 
@@ -868,6 +969,11 @@ namespace blendovideotools
             }
 
             return false;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("Use \"{0}\" for the input file. Use \"{1}\" for output file. Include the quotation marks.");
         }
 
         // -- end --
