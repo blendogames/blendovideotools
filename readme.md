@@ -11,6 +11,7 @@ Functionality includes:
 - resizing to a new width/height.
 - trimming a video shorter.
 - joining multiple videos together.
+- crop a video.
 
 This is written in C# and a .sln solution for Visual Studio 2015 is provided. Windows only.
 
