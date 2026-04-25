@@ -51,7 +51,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox_cropheight = new System.Windows.Forms.TextBox();
+            this.textBox_cropwidth = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_custom = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -60,21 +66,15 @@
             this.copyAllToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.textBox_cropwidth = new System.Windows.Forms.TextBox();
-            this.textBox_cropheight = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            this.tabPage7.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            this.tabPage7.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -285,13 +285,62 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(3, 5);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(546, 23);
             this.label10.TabIndex = 0;
-            this.label10.Text = "ctrl+click to select multiple video files, then drag them here";
+            this.label10.Text = "ctrl+click to select multiple video files. Then drag them here (note: drag the fi" +
+    "rst file)";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.label12);
+            this.tabPage7.Controls.Add(this.label11);
+            this.tabPage7.Controls.Add(this.textBox_cropheight);
+            this.tabPage7.Controls.Add(this.textBox_cropwidth);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(552, 35);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Crop";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(156, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 13);
+            this.label12.TabIndex = 3;
+            this.label12.Text = "Height:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(25, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(38, 13);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "Width:";
+            // 
+            // textBox_cropheight
+            // 
+            this.textBox_cropheight.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_cropheight.Location = new System.Drawing.Point(203, 5);
+            this.textBox_cropheight.Name = "textBox_cropheight";
+            this.textBox_cropheight.Size = new System.Drawing.Size(70, 23);
+            this.textBox_cropheight.TabIndex = 1;
+            // 
+            // textBox_cropwidth
+            // 
+            this.textBox_cropwidth.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_cropwidth.Location = new System.Drawing.Point(69, 6);
+            this.textBox_cropwidth.Name = "textBox_cropwidth";
+            this.textBox_cropwidth.Size = new System.Drawing.Size(70, 23);
+            this.textBox_cropwidth.TabIndex = 0;
             // 
             // tabPage5
             // 
@@ -305,6 +354,18 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Custom";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(531, 10);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
+            this.linkLabel1.TabIndex = 2;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "?";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label9
             // 
@@ -377,66 +438,6 @@
             this.clearAllToolStripMenuItem.Text = "Clear log";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.label12);
-            this.tabPage7.Controls.Add(this.label11);
-            this.tabPage7.Controls.Add(this.textBox_cropheight);
-            this.tabPage7.Controls.Add(this.textBox_cropwidth);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(552, 35);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "Crop";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // textBox_cropwidth
-            // 
-            this.textBox_cropwidth.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_cropwidth.Location = new System.Drawing.Point(69, 6);
-            this.textBox_cropwidth.Name = "textBox_cropwidth";
-            this.textBox_cropwidth.Size = new System.Drawing.Size(70, 23);
-            this.textBox_cropwidth.TabIndex = 0;
-            // 
-            // textBox_cropheight
-            // 
-            this.textBox_cropheight.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_cropheight.Location = new System.Drawing.Point(203, 5);
-            this.textBox_cropheight.Name = "textBox_cropheight";
-            this.textBox_cropheight.Size = new System.Drawing.Size(70, 23);
-            this.textBox_cropheight.TabIndex = 1;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(25, 10);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 13);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "Width:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(156, 9);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "Height:";
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(531, 10);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "?";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,11 +458,11 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage6.ResumeLayout(false);
+            this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage7.PerformLayout();
             this.ResumeLayout(false);
 
         }
