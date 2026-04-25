@@ -16,6 +16,7 @@ namespace blendovideotools
     public partial class Form1 : Form
     {
         const string MERGEFILE = "mergelist.txt";
+        const string IMAGEFILE = "imagelist.txt";
 
         BackgroundWorker backgroundWorker;
         DateTime starttime;
@@ -29,6 +30,7 @@ namespace blendovideotools
             trim,            
             merge,
             crop,
+            imagelist,
             custom,
         }
 
@@ -163,6 +165,13 @@ namespace blendovideotools
             {
                 backgroundWorker = new BackgroundWorker();
                 backgroundWorker.DoWork += OnCropDoWork;
+                backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
+                backgroundWorker.RunWorkerAsync(argument: files);
+            }
+            else if (tabControl1.SelectedIndex == (int)TabIndex.imagelist)
+            {
+                backgroundWorker = new BackgroundWorker();
+                backgroundWorker.DoWork += OnImagelistDoWork;
                 backgroundWorker.RunWorkerCompleted += OnConvertCompleted;
                 backgroundWorker.RunWorkerAsync(argument: files);
             }
@@ -464,6 +473,137 @@ namespace blendovideotools
             
         }
         #endregion
+
+
+        #region IMAGELIST
+        private void OnImagelistDoWork(object sender, DoWorkEventArgs e)
+        {
+            string[] files = (string[])e.Argument;
+            if (files.Length < 2)
+            {
+                AddLog_Invoked("ERROR: you need to drag in at least 2 image files.");
+                return;
+            }
+
+            bool hasError = false;
+            if (string.IsNullOrWhiteSpace(textBox_imagelistExtension.Text))
+            {
+                AddLog_Invoked("ERROR: video file extension field is empty.");
+                hasError = true;
+            }
+
+            int fps;
+            if (!int.TryParse(textBox_imagelistFPS.Text, out fps))
+            {
+                AddLog_Invoked("ERROR: framerate field is empty.");
+                hasError = true;
+            }
+
+            if (hasError)
+            {
+                return;
+            }
+
+            string args = GetArgs("args_imagelist.txt", "-y -f concat -r {0} -safe 0 -i imagelist.txt -c:v libx264 -crf 10 \"{ 1}\"");
+            AddLog_Invoked("");
+            AddLog_Invoked("Using arguments: {0}", args);
+
+            DoImagelistConvert(files, args);
+        }
+
+        void DoImagelistConvert(string[] files, string args)
+        {
+            AddLog_Invoked(" ");
+            AddLog_Invoked("Converting image files to '{0}' video.", textBox_imagelistExtension.Text);
+            AddLog_Invoked("Dragged in: {0} files.", files.Length.ToString());
+            AddLog_Invoked(string.Empty);
+
+
+            //Write the text file.
+            AddLog_Invoked(string.Empty);
+            AddLog_Invoked("Writing imagelist.txt file...");
+
+            List<string> draggedFiles = new List<string>();
+            for (int i = 0; i < files.Length; i++)
+            {
+                draggedFiles.Add(files[i]);
+            }
+            draggedFiles.Sort(); //alphabetize.
+
+            string mergelistStr = string.Empty;
+            for (int i = 0; i < files.Length; i++)
+            {
+                mergelistStr += string.Format("file '{0}'{1}", draggedFiles[i], Environment.NewLine);
+            }
+
+            if (!WriteTextFile(mergelistStr, IMAGEFILE))
+            {
+                return;
+            }
+            AddLog_Invoked("Wrote imagelist.txt file.");
+            AddLog_Invoked(string.Empty);
+
+            int FPS = int.Parse(textBox_imagelistFPS.Text);
+
+            string NEWEXTENSION = textBox_imagelistExtension.Text;
+            NEWEXTENSION = NEWEXTENSION.Replace(".", string.Empty);
+            
+            string justFilename = Path.GetFileNameWithoutExtension(draggedFiles[0]);
+            justFilename = string.Format("{0}.{1}", justFilename, NEWEXTENSION);
+            justFilename = AppendFilenameEdit(justFilename);
+            string justFolder = Path.GetDirectoryName(files[0]);
+            string newFileName = Path.Combine(justFolder, justFilename);
+
+
+            string arguments;
+            try
+            {
+                arguments = string.Format(args, FPS, newFileName);
+                AddLog_Invoked(arguments);
+                AddLog_Invoked(" ");
+            }
+            catch (Exception e)
+            {
+                AddLog_Invoked("ERROR: failed to parse arguments:");
+                AddLog_Invoked(args);
+                return;
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "ffmpeg.exe";
+            startInfo.Arguments = arguments;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            Process proc = new Process();
+
+            try
+            {
+                proc.StartInfo = startInfo;
+                proc.Start();
+
+                while (!proc.StandardError.EndOfStream)
+                {
+                    string line = proc.StandardError.ReadLine();
+                    AddLog_Invoked("    " + line);
+                }
+            }
+            catch (Exception err)
+            {
+                AddLog_Invoked("------------------------------");
+                AddLog_Invoked(string.Format("ERROR: {0}", err));
+                AddLog_Invoked("------------------------------");
+            }
+
+
+        }
+        #endregion
+
+
+
+
 
 
         #region CROP

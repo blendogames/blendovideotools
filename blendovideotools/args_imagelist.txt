@@ -1,0 +1,1 @@
+﻿-y -f concat -r {0} -safe 0 -i imagelist.txt -c:v libx264 -crf 10 "{1}"
