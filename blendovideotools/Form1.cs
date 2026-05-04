@@ -509,7 +509,7 @@ namespace blendovideotools
                 return;
             }
 
-            string args = GetArgs("args_imagelist.txt", "-y -f concat -r {0} -safe 0 -i imagelist.txt -c:v libx264 -crf 10 \"{ 1}\"");
+            string args = GetArgs("args_imagelist.txt", "-y -f concat -r {0} -safe 0 -i imagelist.txt -crf 10 \"{ 1}\"");
             AddLog_Invoked("");
             AddLog_Invoked("Using arguments: {0}", args);
 
