@@ -44,6 +44,8 @@ namespace blendovideotools
 
             textBox_framerate.KeyPress += new KeyPressEventHandler(TextBox_framerate_KeyPress);
 
+            listBox1.KeyDown += ListBox1_KeyDown;
+
             //textBox_width.KeyPress += new KeyPressEventHandler(TextBox_size_KeyPress);
             //textBox_height.KeyPress += new KeyPressEventHandler(TextBox_size_KeyPress);
 
@@ -52,7 +54,7 @@ namespace blendovideotools
             {
                 AddLog("ERROR: You need ffmpeg.exe in the same folder as this program.");
                 AddLog(string.Empty);
-                AddLog("1. Download ffmpeg.exe from:");
+                AddLog("1. Download ffmpeg from:");
                 AddLog("   https://ffmpeg.org");
                 AddLog(string.Empty);
                 AddLog("2. Copy ffmpeg.exe into this folder:");
@@ -65,6 +67,29 @@ namespace blendovideotools
             }
 
             AddLog("Drag files into this window.");
+        }
+
+        private void ListBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (listBox1.SelectedItem == null)
+                    return;
+
+                if (listBox1.SelectedItems.Count <= 1)
+                {
+                    Clipboard.SetText(listBox1.SelectedItem.ToString());
+                    return;
+                }
+
+                string strToCopy = string.Empty;
+                for (int i = 0; i < listBox1.SelectedItems.Count; i++)
+                {
+                    strToCopy += listBox1.SelectedItems[i] + Environment.NewLine;                    
+                }
+
+                Clipboard.SetText(strToCopy);
+            }
         }
 
 
