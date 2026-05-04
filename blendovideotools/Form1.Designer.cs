@@ -56,6 +56,12 @@
             this.label11 = new System.Windows.Forms.Label();
             this.textBox_cropheight = new System.Windows.Forms.TextBox();
             this.textBox_cropwidth = new System.Windows.Forms.TextBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox_imagelistFPS = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox_imagelistExtension = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
@@ -66,12 +72,6 @@
             this.copyAllToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.textBox_imagelistExtension = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox_imagelistFPS = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -79,9 +79,9 @@
             this.tabPage4.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
-            this.tabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -180,11 +180,12 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(304, 12);
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label5.Location = new System.Drawing.Point(314, 11);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(181, 13);
+            this.label5.Size = new System.Drawing.Size(184, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Note: it is ok to leave one field empty";
+            this.label5.Text = "Note: it is ok to leave one field empty.";
             // 
             // textBox_height
             // 
@@ -239,6 +240,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.label8.Location = new System.Drawing.Point(474, 7);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 18);
@@ -298,8 +300,8 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(546, 23);
             this.label10.TabIndex = 0;
-            this.label10.Text = "ctrl+click to select multiple video files. Then drag them here (note: drag the fi" +
-    "rst file)";
+            this.label10.Text = "Ctrl+click to select multiple video files. Then, drag them here (note: drag the F" +
+    "IRST file)";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabPage7
@@ -349,6 +351,68 @@
             this.textBox_cropwidth.Name = "textBox_cropwidth";
             this.textBox_cropwidth.Size = new System.Drawing.Size(70, 23);
             this.textBox_cropwidth.TabIndex = 0;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.label15);
+            this.tabPage8.Controls.Add(this.label14);
+            this.tabPage8.Controls.Add(this.textBox_imagelistFPS);
+            this.tabPage8.Controls.Add(this.label13);
+            this.tabPage8.Controls.Add(this.textBox_imagelistExtension);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(552, 35);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Images to video";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label15.Location = new System.Drawing.Point(321, 10);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(225, 13);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Select multiple image files and drag them here.";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(185, 10);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(57, 13);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "Framerate:";
+            // 
+            // textBox_imagelistFPS
+            // 
+            this.textBox_imagelistFPS.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_imagelistFPS.Location = new System.Drawing.Point(248, 6);
+            this.textBox_imagelistFPS.Name = "textBox_imagelistFPS";
+            this.textBox_imagelistFPS.Size = new System.Drawing.Size(40, 23);
+            this.textBox_imagelistFPS.TabIndex = 2;
+            this.textBox_imagelistFPS.Text = "30";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 10);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(101, 13);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Video file extension:";
+            // 
+            // textBox_imagelistExtension
+            // 
+            this.textBox_imagelistExtension.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_imagelistExtension.Location = new System.Drawing.Point(113, 6);
+            this.textBox_imagelistExtension.Name = "textBox_imagelistExtension";
+            this.textBox_imagelistExtension.Size = new System.Drawing.Size(40, 23);
+            this.textBox_imagelistExtension.TabIndex = 0;
+            this.textBox_imagelistExtension.Text = "mp4";
             // 
             // tabPage5
             // 
@@ -446,68 +510,6 @@
             this.clearAllToolStripMenuItem.Text = "Clear log";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.label15);
-            this.tabPage8.Controls.Add(this.label14);
-            this.tabPage8.Controls.Add(this.textBox_imagelistFPS);
-            this.tabPage8.Controls.Add(this.label13);
-            this.tabPage8.Controls.Add(this.textBox_imagelistExtension);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(552, 35);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "Images to video";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // textBox_imagelistExtension
-            // 
-            this.textBox_imagelistExtension.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_imagelistExtension.Location = new System.Drawing.Point(113, 6);
-            this.textBox_imagelistExtension.Name = "textBox_imagelistExtension";
-            this.textBox_imagelistExtension.Size = new System.Drawing.Size(40, 23);
-            this.textBox_imagelistExtension.TabIndex = 0;
-            this.textBox_imagelistExtension.Text = "mp4";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 10);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(101, 13);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "Video file extension:";
-            // 
-            // textBox_imagelistFPS
-            // 
-            this.textBox_imagelistFPS.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_imagelistFPS.Location = new System.Drawing.Point(262, 6);
-            this.textBox_imagelistFPS.Name = "textBox_imagelistFPS";
-            this.textBox_imagelistFPS.Size = new System.Drawing.Size(40, 23);
-            this.textBox_imagelistFPS.TabIndex = 2;
-            this.textBox_imagelistFPS.Text = "30";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(199, 10);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 13);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "Framerate:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label15.Location = new System.Drawing.Point(355, 10);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(181, 13);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "Converts multiple images into a video";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -530,11 +532,11 @@
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage8.PerformLayout();
             this.ResumeLayout(false);
 
         }

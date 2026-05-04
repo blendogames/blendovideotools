@@ -51,8 +51,13 @@ namespace blendovideotools
             if (!File.Exists("ffmpeg.exe"))
             {
                 AddLog("ERROR: You need ffmpeg.exe in the same folder as this program.");
-                AddLog("1. Download it from https://ffmpeg.org");
-                AddLog("2. Copy it into this program's folder.");
+                AddLog(string.Empty);
+                AddLog("1. Download ffmpeg.exe from:");
+                AddLog("   https://ffmpeg.org");
+                AddLog(string.Empty);
+                AddLog("2. Copy ffmpeg.exe into this folder:");
+                AddLog(string.Format("   {0}", System.IO.Directory.GetCurrentDirectory()));
+                AddLog(string.Empty);
                 AddLog("3. Restart this program.");
                 tabControl1.Enabled = false;
                 listBox1.BackColor = System.Drawing.Color.Pink;
@@ -1113,7 +1118,7 @@ namespace blendovideotools
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("Use \"{0}\" for the input file. Use \"{1}\" for output file. Include the quotation marks.");
+            MessageBox.Show("Use \"{0}\" for the input file. Use \"{1}\" for output file. Include the quotation marks.\n\nEXAMPLES:\n-i \"{0}\" -vf scale=640:480 \"{1}\"\nwill resize a video to 640x480 resolution.\n\n-i \"{0}\" -vf \"crop=300:500:250:100\" \"{1}\"\nwill crop a video to 300x500, located at coordinate x=250 y=100.");
         }
 
         // -- end --
