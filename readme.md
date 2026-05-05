@@ -2,7 +2,7 @@
 [![Generic badge](https://img.shields.io/badge/Download-itch.io-red.svg)](https://blendogames.itch.io/blendo-video-tools) [![Donate](https://img.shields.io/badge/donate-$$$-brightgreen.svg)](https://blendogames.itch.io/blendo-video-tools/purchase)
 
 ## About
-This is a very basic gui for FFmpeg:
+Blendo Video Tools is a basic gui for FFmpeg:
 
 ![](screenshot1.png)
 
@@ -25,7 +25,7 @@ If you want to download and use it, the tool is [available here](https://blendog
 - It will output a file with a date timestamp appended to the filename.
 
 ## Installation
-Download [FFMPEG](https://www.ffmpeg.org/download.html) and place ffmpeg.exe in the same folder as this program.
+Download [FFmpeg](https://www.ffmpeg.org/download.html) and place ffmpeg.exe in the same folder as this program.
 
 ## License
 This source code is licensed under the MIT license.
