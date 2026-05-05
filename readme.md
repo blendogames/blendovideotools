@@ -34,4 +34,4 @@ This source code is licensed under the MIT license.
 - by [Brendon Chung](https://blendogames.com)
 
 ## Libraries used
-- [FFMPEG](https://ffmpeg.org)
+- [FFmpeg](https://ffmpeg.org)
