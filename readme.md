@@ -17,7 +17,8 @@ Functionality includes:
 
 This is written in C# and a .sln solution for Visual Studio 2015 is provided. Windows only.
 
-If you want to download and use it, the tool is [available here](https://blendogames.itch.io/blendo-video-tools).
+## Download
+If you want to download and use this tool, it's [available here](https://blendogames.itch.io/blendo-video-tools).
 
 ## Notes
 - Contrary to the name, this tool can also be used on still images (PNG, JPG, etc) and audio (WAV, OGG, etc), not just videos.
