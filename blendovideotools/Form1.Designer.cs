@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox_useOriginalFilename = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_extension = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -104,6 +105,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBox_useOriginalFilename);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.textBox_extension);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -113,6 +115,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "File converter";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_useOriginalFilename
+            // 
+            this.checkBox_useOriginalFilename.AutoSize = true;
+            this.checkBox_useOriginalFilename.Location = new System.Drawing.Point(417, 9);
+            this.checkBox_useOriginalFilename.Name = "checkBox_useOriginalFilename";
+            this.checkBox_useOriginalFilename.Size = new System.Drawing.Size(123, 17);
+            this.checkBox_useOriginalFilename.TabIndex = 2;
+            this.checkBox_useOriginalFilename.Text = "Use original filename";
+            this.checkBox_useOriginalFilename.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -585,6 +597,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox textBox_imagelistExtension;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox checkBox_useOriginalFilename;
     }
 }
 

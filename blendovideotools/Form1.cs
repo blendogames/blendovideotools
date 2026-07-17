@@ -947,7 +947,12 @@ namespace blendovideotools
             AddLog_Invoked("Converting filetype: {0}", file.Name);
 
             string newFileName = string.Format("{0}.{1}", filenameWithoutExtension, textBox_extension.Text);
-            newFileName = AppendFilenameEdit(newFileName);
+
+            if (!checkBox_useOriginalFilename.Checked)
+            {
+                newFileName = AppendFilenameEdit(newFileName);
+            }
+            
             newFileName = Path.Combine(file.DirectoryName, newFileName);
 
             string arguments;
