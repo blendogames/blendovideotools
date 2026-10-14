@@ -23,6 +23,8 @@ namespace blendovideotools
         BackgroundWorker backgroundWorker;
         DateTime starttime;
 
+        int errorCount;
+
         //Make sure this retains order parity with the tabs in the form.
         enum TabIndex
         {
@@ -131,6 +133,9 @@ namespace blendovideotools
         //Drag file into window.
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
+            errorCount = 0;
+            listBox1.BackColor = System.Drawing.Color.White;
+
             List<string> allfiles = new List<string>();
 
             string[] rawpaths = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -284,8 +289,6 @@ namespace blendovideotools
         {
             //ffmpeg -i input.jpg -vf scale=320:-1 output_320.png
 
-            float framerateValue = float.Parse(textBox_framerate.Text);
-
             FileInfo file = new FileInfo(filename);
 
             AddLog_Invoked(" ");
@@ -324,12 +327,6 @@ namespace blendovideotools
                 proc.StartInfo = startInfo;
                 proc.Start();
 
-                //while (!proc.StandardOutput.EndOfStream)
-                //{
-                //    string line = proc.StandardOutput.ReadLine();
-                //    AddLog_Invoked("    " + line);
-                //}
-
                 while (!proc.StandardError.EndOfStream)
                 {
                     string line = proc.StandardError.ReadLine();
@@ -341,6 +338,11 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
                 AddLog_Invoked(string.Format("ERROR: {0}", err));
                 AddLog_Invoked("------------------------------");
+            }
+
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
             }
         }
         #endregion
@@ -425,6 +427,11 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
                 AddLog_Invoked(string.Format("ERROR: {0}", err));
                 AddLog_Invoked("------------------------------");
+            }
+
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
             }
         }
 
@@ -522,7 +529,10 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
             }
 
-            
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
+            }
         }
         #endregion
 
@@ -649,7 +659,10 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
             }
 
-
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
+            }
         }
         #endregion
 
@@ -746,7 +759,10 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
             }
 
-
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
+            }
         }
         #endregion
 
@@ -821,6 +837,11 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
                 AddLog_Invoked(string.Format("ERROR: {0}", err));
                 AddLog_Invoked("------------------------------");
+            }
+
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
             }
         }
 
@@ -917,6 +938,11 @@ namespace blendovideotools
                 AddLog_Invoked(string.Format("ERROR: {0}", err));
                 AddLog_Invoked("------------------------------");
             }
+
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
+            }
         }
 
         private bool VerifyTimeValue(string value)
@@ -1006,12 +1032,6 @@ namespace blendovideotools
                 proc.StartInfo = startInfo;
                 proc.Start();
 
-                //while (!proc.StandardOutput.EndOfStream)
-                //{
-                //    string line = proc.StandardOutput.ReadLine();
-                //    AddLog_Invoked("    " + line);
-                //}
-
                 while (!proc.StandardError.EndOfStream)
                 {
                     string line = proc.StandardError.ReadLine();
@@ -1023,6 +1043,11 @@ namespace blendovideotools
                 AddLog_Invoked("------------------------------");
                 AddLog_Invoked(string.Format("ERROR: {0}", err));
                 AddLog_Invoked("------------------------------");
+            }
+
+            if (proc.ExitCode != 0)
+            {
+                AddExitcodeError();
             }
         }
         #endregion
@@ -1049,6 +1074,17 @@ namespace blendovideotools
                 displayTime = string.Format("{0} minutes {1} seconds", delta.Minutes, delta.Seconds);
             }
 
+
+            if (errorCount <= 0)
+            {
+                AddLog("No errors found.");
+                listBox1.BackColor = System.Drawing.Color.GreenYellow;
+            }
+            else
+            {
+                AddLog($"Errors: {errorCount}");
+                listBox1.BackColor = System.Drawing.Color.Pink;
+            }
 
             AddLog("Done. (Total time: {0})", displayTime);
         }
@@ -1087,6 +1123,8 @@ namespace blendovideotools
         private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+
+            listBox1.BackColor = System.Drawing.Color.White;
         }
 
         private void copyAllToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1171,6 +1209,14 @@ namespace blendovideotools
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             MessageBox.Show("Use \"{0}\" for the input file. Use \"{1}\" for output file. Include the quotation marks.\n\nEXAMPLES:\n-i \"{0}\" -vf scale=640:480 \"{1}\"\nwill resize a video to 640x480 resolution.\n\n-i \"{0}\" -vf \"crop=300:500:250:100\" \"{1}\"\nwill crop a video to 300x500, located at coordinate x=250 y=100.");
+        }
+
+        private void AddExitcodeError()
+        {
+            AddLog_Invoked("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            AddLog_Invoked("^^^^^^^^^^^^^^ ERROR FOUND ^^^^^^^^^^^^^^");
+            AddLog_Invoked("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            errorCount++;
         }
 
         // -- end --

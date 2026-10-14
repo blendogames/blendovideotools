@@ -122,11 +122,12 @@
             this.checkBox_useOriginalFilename.AutoSize = true;
             this.checkBox_useOriginalFilename.Checked = true;
             this.checkBox_useOriginalFilename.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_useOriginalFilename.Location = new System.Drawing.Point(425, 9);
+            this.checkBox_useOriginalFilename.Location = new System.Drawing.Point(430, 9);
             this.checkBox_useOriginalFilename.Name = "checkBox_useOriginalFilename";
             this.checkBox_useOriginalFilename.Size = new System.Drawing.Size(123, 17);
             this.checkBox_useOriginalFilename.TabIndex = 2;
             this.checkBox_useOriginalFilename.Text = "Use original filename";
+            this.toolTip1.SetToolTip(this.checkBox_useOriginalFilename, "Uncheck this to append a unique timestamp filename");
             this.checkBox_useOriginalFilename.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -529,11 +530,12 @@
             // checkBox_customOrigFilename
             // 
             this.checkBox_customOrigFilename.AutoSize = true;
-            this.checkBox_customOrigFilename.Location = new System.Drawing.Point(431, 10);
+            this.checkBox_customOrigFilename.Location = new System.Drawing.Point(430, 9);
             this.checkBox_customOrigFilename.Name = "checkBox_customOrigFilename";
             this.checkBox_customOrigFilename.Size = new System.Drawing.Size(123, 17);
             this.checkBox_customOrigFilename.TabIndex = 3;
             this.checkBox_customOrigFilename.Text = "Use original filename";
+            this.toolTip1.SetToolTip(this.checkBox_customOrigFilename, "Uncheck this to append a unique timestamp filename");
             this.checkBox_customOrigFilename.UseVisualStyleBackColor = true;
             // 
             // Form1
