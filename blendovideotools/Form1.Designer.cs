@@ -73,6 +73,7 @@
             this.copyAllToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBox_customOrigFilename = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -119,7 +120,9 @@
             // checkBox_useOriginalFilename
             // 
             this.checkBox_useOriginalFilename.AutoSize = true;
-            this.checkBox_useOriginalFilename.Location = new System.Drawing.Point(417, 9);
+            this.checkBox_useOriginalFilename.Checked = true;
+            this.checkBox_useOriginalFilename.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_useOriginalFilename.Location = new System.Drawing.Point(425, 9);
             this.checkBox_useOriginalFilename.Name = "checkBox_useOriginalFilename";
             this.checkBox_useOriginalFilename.Size = new System.Drawing.Size(123, 17);
             this.checkBox_useOriginalFilename.TabIndex = 2;
@@ -428,6 +431,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.checkBox_customOrigFilename);
             this.tabPage5.Controls.Add(this.linkLabel1);
             this.tabPage5.Controls.Add(this.label9);
             this.tabPage5.Controls.Add(this.textBox_custom);
@@ -443,7 +447,7 @@
             // 
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(531, 10);
+            this.linkLabel1.Location = new System.Drawing.Point(400, 10);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(13, 13);
             this.linkLabel1.TabIndex = 2;
@@ -469,7 +473,7 @@
             this.textBox_custom.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_custom.Location = new System.Drawing.Point(69, 6);
             this.textBox_custom.Name = "textBox_custom";
-            this.textBox_custom.Size = new System.Drawing.Size(456, 23);
+            this.textBox_custom.Size = new System.Drawing.Size(331, 23);
             this.textBox_custom.TabIndex = 0;
             this.toolTip1.SetToolTip(this.textBox_custom, "Use \"{0}\" for the input file. Use \"{1}\" for output file. Include the quotation ma" +
         "rks.");
@@ -521,6 +525,16 @@
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.clearAllToolStripMenuItem.Text = "Clear log";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
+            // 
+            // checkBox_customOrigFilename
+            // 
+            this.checkBox_customOrigFilename.AutoSize = true;
+            this.checkBox_customOrigFilename.Location = new System.Drawing.Point(431, 10);
+            this.checkBox_customOrigFilename.Name = "checkBox_customOrigFilename";
+            this.checkBox_customOrigFilename.Size = new System.Drawing.Size(123, 17);
+            this.checkBox_customOrigFilename.TabIndex = 3;
+            this.checkBox_customOrigFilename.Text = "Use original filename";
+            this.checkBox_customOrigFilename.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -598,6 +612,7 @@
         private System.Windows.Forms.TextBox textBox_imagelistExtension;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox checkBox_useOriginalFilename;
+        private System.Windows.Forms.CheckBox checkBox_customOrigFilename;
     }
 }
 

@@ -11,6 +11,8 @@ using System.IO;
 using System.Diagnostics;
 using System.ComponentModel;
 
+//TODO: Check if proc exitcode is not zero. if so, then tell user that an error has happened.
+
 namespace blendovideotools
 {
     public partial class Form1 : Form
@@ -129,12 +131,32 @@ namespace blendovideotools
         //Drag file into window.
         void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            List<string> allfiles = new List<string>();
+
+            string[] rawpaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (string path in rawpaths)
             {
-                var path = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                // Alternative method using FileAttributes
+                FileAttributes attr = File.GetAttributes(path);
+
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    //Folder.
+                    string[] subFiles = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+                    allfiles.AddRange(subFiles);
+                }
+                else
+                {
+                    //Just a normal file.
+                    allfiles.Add(path);
+                }
             }
 
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+
+
+            string[] files = allfiles.ToArray();
 
             if (files.Length <= 0)
                 return;
@@ -756,7 +778,7 @@ namespace blendovideotools
             AddLog_Invoked(" ");
             AddLog_Invoked("Custom command on: {0}", file.Name);
 
-            string newFileName = AppendFilenameEdit(file.Name);
+            string newFileName = (checkBox_customOrigFilename.Checked) ? file.Name : AppendFilenameEdit(file.Name);
             newFileName = Path.Combine(file.DirectoryName, newFileName);
 
             string arguments;
