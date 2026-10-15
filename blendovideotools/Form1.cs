@@ -11,7 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using System.ComponentModel;
 
-//TODO: Check if proc exitcode is not zero. if so, then tell user that an error has happened.
+//TODO: Have close button or ESC cancel current background task
 
 namespace blendovideotools
 {

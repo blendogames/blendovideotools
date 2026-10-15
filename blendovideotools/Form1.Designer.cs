@@ -64,6 +64,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.textBox_imagelistExtension = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.checkBox_customOrigFilename = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_custom = new System.Windows.Forms.TextBox();
@@ -73,7 +74,6 @@
             this.copyAllToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.checkBox_customOrigFilename = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -119,6 +119,7 @@
             // 
             // checkBox_useOriginalFilename
             // 
+            this.checkBox_useOriginalFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox_useOriginalFilename.AutoSize = true;
             this.checkBox_useOriginalFilename.Checked = true;
             this.checkBox_useOriginalFilename.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -444,6 +445,18 @@
             this.tabPage5.Text = "Custom";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // checkBox_customOrigFilename
+            // 
+            this.checkBox_customOrigFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox_customOrigFilename.AutoSize = true;
+            this.checkBox_customOrigFilename.Location = new System.Drawing.Point(430, 9);
+            this.checkBox_customOrigFilename.Name = "checkBox_customOrigFilename";
+            this.checkBox_customOrigFilename.Size = new System.Drawing.Size(123, 17);
+            this.checkBox_customOrigFilename.TabIndex = 3;
+            this.checkBox_customOrigFilename.Text = "Use original filename";
+            this.toolTip1.SetToolTip(this.checkBox_customOrigFilename, "Uncheck this to append a unique timestamp filename");
+            this.checkBox_customOrigFilename.UseVisualStyleBackColor = true;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -526,17 +539,6 @@
             this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.clearAllToolStripMenuItem.Text = "Clear log";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
-            // 
-            // checkBox_customOrigFilename
-            // 
-            this.checkBox_customOrigFilename.AutoSize = true;
-            this.checkBox_customOrigFilename.Location = new System.Drawing.Point(430, 9);
-            this.checkBox_customOrigFilename.Name = "checkBox_customOrigFilename";
-            this.checkBox_customOrigFilename.Size = new System.Drawing.Size(123, 17);
-            this.checkBox_customOrigFilename.TabIndex = 3;
-            this.checkBox_customOrigFilename.Text = "Use original filename";
-            this.toolTip1.SetToolTip(this.checkBox_customOrigFilename, "Uncheck this to append a unique timestamp filename");
-            this.checkBox_customOrigFilename.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
